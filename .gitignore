@@ -1,0 +1,55 @@
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# Visual Studio
+.vs/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Test results
+TestResults/
+
+# Coverage
+coverage/
+coverage.*
+*.coverage
+*.coveragexml
+
+# Environment/config secrets
+.env
+.env.*
+secrets.json
+
+# Publish output
+publish/
+
+# Temporary files
+*.tmp
+*.temp

@@ -1,0 +1,90 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+@using System.Drawing
+
+<PageTitle>Connect Four</PageTitle>
+
+@if (showColorSelection)
+{
+    <div class="modal-overlay">
+        <div class="color-modal">
+            <h2>Choose Your Colors</h2>
+
+            <p>
+                Enter a hexadecimal color code for each player.
+                For example: <code>#FF0000</code>
+            </p>
+
+            <div class="color-input">
+                <label for="player1Color">Player 1 Color</label>
+                <input id="player1Color"
+                       @bind="player1ColorCode"
+                       placeholder="#FF0000" />
+            </div>
+
+            <div class="color-input">
+                <label for="player2Color">Player 2 Color</label>
+                <input id="player2Color"
+                       @bind="player2ColorCode"
+                       placeholder="#0000FF" />
+            </div>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <p class="error-message">@errorMessage</p>
+            }
+
+            <button @onclick="StartGame">
+                Start Game
+            </button>
+        </div>
+    </div>
+}
+else
+{
+    <Board Player1Color="player1Color"
+           Player2Color="player2Color" />
+}
+
+@code {
+    private bool showColorSelection = true;
+
+    private string player1ColorCode = "#FF0000";
+    private string player2ColorCode = "#0000FF";
+
+    private Color player1Color;
+    private Color player2Color;
+
+    private string errorMessage = string.Empty;
+
+    private void StartGame()
+    {
+        errorMessage = string.Empty;
+
+        if (!IsValidHexColor(player1ColorCode) ||
+            !IsValidHexColor(player2ColorCode))
+        {
+            errorMessage =
+                "Colors must use the format #RRGGBB, such as #FF0000.";
+
+            return;
+        }
+
+        player1Color = ColorTranslator.FromHtml(player1ColorCode);
+        player2Color = ColorTranslator.FromHtml(player2ColorCode);
+
+        showColorSelection = false;
+    }
+
+    private bool IsValidHexColor(string color)
+    {
+        if (string.IsNullOrWhiteSpace(color))
+            return false;
+
+        return System.Text.RegularExpressions.Regex.IsMatch(
+            color,
+            "^#[0-9A-Fa-f]{6}$"
+        );
+    }
+}
